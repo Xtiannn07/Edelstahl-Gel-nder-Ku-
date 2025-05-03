@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Oswald:wght@200..700&display=swap');
+
+@import "tailwindcss";
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+}
+
+h1, h2, h3, h4, h5, h6, .font-title {
+  font-family: 'Oswald', sans-serif;
+}
+
+.body {
+  background: linear-gradient(90deg, #f0f3ff 0%, #eef1f8 50%, #e6e8ed 100%);
+}

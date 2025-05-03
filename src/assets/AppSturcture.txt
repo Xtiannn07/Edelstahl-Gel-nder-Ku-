@@ -1,0 +1,30 @@
+src/
+├── components/
+│   ├── Header.jsx
+│   ├── Footer.jsx
+│   ├── LanguageSwitcher.jsx
+│   ├── Services.jsx
+│   ├── Gallery.jsx
+│   ├── ContactForm.jsx
+│   ├── Testimonials.jsx
+│   ├── Navbar.jsx
+│   └── AnimatedSection.jsx
+├── pages/
+│   ├── Home.jsx
+│   ├── AboutUs.jsx
+│   ├── ServicesPage.jsx
+│   ├── GalleryPage.jsx
+│   ├── Contact.jsx
+│   └── NotFound.jsx
+├── context/
+│   └── LanguageContext.jsx
+├── redux/
+│   ├── store.js
+│   ├── slices/
+│   │   ├── gallerySlice.js
+│   │   ├── servicesSlice.js
+│   │   └── languageSlice.js
+│   └── hooks.js
+├── App.jsx
+├── main.jsx
+└── index.css
