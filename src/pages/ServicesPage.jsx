@@ -53,9 +53,8 @@ export default function ServicesPage() {
       >
         {/* Hero Section */}
         <AnimatedSection animationType="fadeIn">
-          <div className="bg-gradient-to-r from-blue-100 via-cyan-100 to-green-100 max-w-full">
+          <div className="bg-stone-100 max-w-full">
             <div className="container mx-auto px-4 py-4 md:py-16 ">
-              <h1 className="text-4xl md:text-5xl font-bold text-center mb-2 md:mb-8">{translations.services.title}</h1>
               <div className="max-w-4xl mx-auto pt-2">
                 <p className="text-sm md:text-lg text-gray-700 text-center">
                   {translations.services.description}
@@ -67,14 +66,14 @@ export default function ServicesPage() {
         
           {/* Services Section */}
           <AnimatedSection>
-            <div className="py-16">
+            <div className="py-8">
               <Services />
             </div>
           </AnimatedSection>
 
         
         {/* Benefits Section */}
-        <section className="py-8">
+        <section className="py-4">
           <div className="container max-w-7xl mx-auto px-4">
             <AnimatedSection animationType="fadeUp">
               <h2 className="text-3xl font-bold text-center mb-12">Why Choose Our Services</h2>
@@ -112,7 +111,7 @@ export default function ServicesPage() {
         {/* Call to Action */}
         <AnimatedSection>
           <section className="p-8">
-            <div className="container mx-auto px-4 max-w-7xl">
+            <div className="container mx-auto px-4 max-w-6xl">
               <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-2xl p-10 shadow-sm">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                   <div className="text-left max-w-xl">

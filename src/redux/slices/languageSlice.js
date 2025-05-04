@@ -15,7 +15,7 @@ const translations = {
       email: 'E-mail'
     },
     services: {
-      title: 'Our Offer',
+      title: 'Our Services',
       description: "We specialize in crafting high-quality metalwork for both residential and commercial needs. Our offer includes a wide range of custom-made products such as railings, fences, gates, stair structures, and more—designed with durability, safety, and style in mind. Whether you're enhancing a home or upgrading a property, we tailor every product to match your exact requirements.",
       items: [
         'Railings for balconies',
@@ -89,7 +89,7 @@ const translations = {
       email: 'E-Mail'
     },
     services: {
-      title: 'Unser Angebot',
+      title: 'Unsere Leistungen',
       description: " Wir sind auf die Herstellung hochwertiger Metallarbeiten für private und gewerbliche Zwecke spezialisiert. Unser Angebot umfasst eine breite Palette maßgeschneiderter Produkte wie Geländer, Zäune, Tore, Treppenkonstruktionen und mehr - entworfen mit Blick auf Langlebigkeit, Sicherheit und Stil. Egal, ob Sie ein Zuhause aufwerten oder eine Immobilie modernisieren möchten, wir passen jedes Produkt an Ihre genauen Anforderungen an.",
       items: [
         'Geländer für Balkone',

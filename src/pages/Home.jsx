@@ -53,9 +53,10 @@ export default function Home() {
       </div>
       
       {/* Hero content positioned over the background */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center">
+      <div className="relative z-10 min-h-screen flex items-center justify-center" >
+      <AnimatedSection>
         <motion.div
-          className="flex flex-col items-center justify-center text-center px-4"
+          className="flex flex-col items-center justify-center text-center px-4 mt[-20]"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
@@ -82,6 +83,7 @@ export default function Home() {
             </Link>
           </motion.div>
 
+
           {/* Scroll Down Indicator */}
             <div className="absolute top-[80%] left-1/2 transform -translate-x-1/2 flex flex-row items-center">
               {/* Replace below with your indicator icon/component */}
@@ -92,6 +94,8 @@ export default function Home() {
             </div>
 
         </motion.div>
+        
+        </AnimatedSection>
       </div>
       
       {/* Content area - now directly after hero without gap */}
@@ -116,7 +120,7 @@ export default function Home() {
           
           {/* Call to Action */}
           <AnimatedSection>
-            <section className="py-4 max-w-6xl mx-auto ">
+            <section className="py-4 pb-16 max-w-6xl mx-auto ">
               <div className="container mx-auto px-4 text-center text-stone-100">
                 <h2 className="text-3xl font-bold mb-6">{translations.contact.title}</h2>
                 <p className=" mb-8 max-w-2xl mx-auto">

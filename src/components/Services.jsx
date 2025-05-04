@@ -9,7 +9,7 @@ export default function Services() {
   const { services } = translations;
   
   return (
-    <div className="min-h-screen">
+    <div className="relative">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -20,10 +20,9 @@ export default function Services() {
           <section className="max-w-4xl mx-auto py-8 mb-16">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl font-bold text-center mb-6">{services.title}</h2>
-              <p className="text-center mb-8 max-w-2xl mx-auto">{services.description}</p>
-                  
               <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 max-w-4xl mx-auto">
                 {services.items.map((item, index) => (
+
                 <AnimatedSection key={index} animationType="slideRight">
                   <motion.div
                     className="flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
@@ -37,6 +36,7 @@ export default function Services() {
                     </div>
                   </motion.div>
                 </AnimatedSection>
+                
                 ))}
               </div>
             </div>

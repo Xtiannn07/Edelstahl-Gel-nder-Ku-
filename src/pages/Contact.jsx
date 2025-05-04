@@ -11,7 +11,7 @@ export default function Contact() {
   const { contact, footer } = translations;
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen max-w-7xl mx-auto">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

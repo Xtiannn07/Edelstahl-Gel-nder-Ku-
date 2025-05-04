@@ -8,10 +8,10 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="w-full bg-gray-800 py-4 text-white">
+    <footer className="masked-top w-full bg-gray-600 py-4 text-white relative">
       <div className="container mx-auto px-4">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Company Info */}
           <div>
             <h3 className="text-xl font-semibold mb-4">{footer.name}</h3>
@@ -19,37 +19,6 @@ export default function Footer() {
 
           </div>
           
-          {/* Quick Links */}
-          <div className='ml-16'>
-            <h3 className="text-xl font-semibold mb-4">{footer.quickLinks || "Quick Links"}</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="/" className="text-gray-300 hover:text-white transition-colors">
-                  {footer.home || "Home"}
-                </a>
-              </li>
-              <li>
-                <a href="/services" className="text-gray-300 hover:text-white transition-colors">
-                  {footer.services || "Services"}
-                </a>
-              </li>
-              <li>
-                <a href="/projects" className="text-gray-300 hover:text-white transition-colors">
-                  {footer.projects || "Projects"}
-                </a>
-              </li>
-              <li>
-                <a href="/about" className="text-gray-300 hover:text-white transition-colors">
-                  {footer.about || "About Us"}
-                </a>
-              </li>
-              <li>
-                <a href="/contact" className="text-gray-300 hover:text-white transition-colors">
-                  {footer.contact || "Contact"}
-                </a>
-              </li>
-            </ul>
-          </div>
           
           
           {/* Contact Information */}
@@ -66,7 +35,7 @@ export default function Footer() {
               
               <div className="flex items-center">
                 <Phone size={20} className="mr-2 flex-shrink-0 text-blue-300" />
-                <p><span className="font-medium">{footer.mobile}:</span> +49 151 400 504 67</p>
+                <p><span className="font-medium">{footer.mobile}:</span> 0175-7150-358</p>
               </div>
               
               <div className="flex items-center">
@@ -77,10 +46,10 @@ export default function Footer() {
               <div className="flex items-center">
                 <Mail size={20} className="mr-2 flex-shrink-0 text-blue-300" />
                 <a 
-                  href="mailto:kessler-waldemar@t-online.de" 
+                  href="mailto:Kus-edelstahl@web.de" 
                   className="text-blue-300 hover:text-blue-100 transition-colors"
                 >
-                  kessler-waldemar@t-online.de
+                  Kus-edelstahl@web.de
                 </a>
               </div>
               

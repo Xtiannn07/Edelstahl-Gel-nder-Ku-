@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,6 +8,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const translations = useSelector(selectTranslations);
   const { navigation } = translations;
   
@@ -17,52 +18,137 @@ export default function Navbar() {
   // Close mobile menu when a link is clicked
   const closeMenu = () => setIsOpen(false);
   
+  // Handle scroll event
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      // Check if scrolled past 25% of the viewport height
+      setIsScrolled(scrollPosition > windowHeight * 0.25);
+    };
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Initial check
+    handleScroll();
+    
+    // Clean up event listener on unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
   // Active link styles
   const activeStyle = "text-blue-600 font-semibold";
   const inactiveStyle = "text-gray-700 hover:text-blue-600 transition-colors";
   
   return (
-    <nav className="bg-white shadow-md py-3 sticky top-0 z-40">
-      <div className="container mx-auto px-4">
+    <motion.nav 
+      className="bg-stone-300 shadow-md sticky top-0 z-40"
+      animate={{
+        paddingTop: isScrolled ? '0.25rem' : '0.5rem',
+        paddingBottom: isScrolled ? '0.25rem' : '0.5rem'
+      }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="container mx-auto px-2 pr-10 md:px-12">
         <div className="flex justify-between items-center">
-          {/* Logo/Brand */}
-          <NavLink to="/" className="text-xl font-bold text-gray-800">
-            Kessler <span className="text-blue-600">Construction</span>
-          </NavLink>
+        {/* Logo/Brand */}
+        <NavLink to="/" className="flex items-center overflow-hidden">
+        <div className="container mx-auto px-4 py-2">
+          <a href="/" className="flex items-center">
+            <motion.div
+              className="flex items-center justify-center"
+              animate={{ 
+                height: isScrolled ? '3.5rem' : '5rem',
+                width: isScrolled ? '3.5rem' : '5rem'
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* SVG recreation of the logo in the image */}
+              <img 
+              src="/icon.svg" 
+              alt="Kessler Logo" 
+              className="h-full w-full object-contain"
+            />
+            </motion.div>
+            
+            <div className="flex flex-col">
+              <motion.div 
+                animate={{ 
+                  fontSize: isScrolled ? '0.5rem' : '1rem'
+                }}
+                transition={{ duration: 0.3 }}
+                className="font-bold text-gray-700 leading-tight"
+              >
+                EDELSTAHL-
+              </motion.div>
+              <motion.div 
+                animate={{ 
+                  fontSize: isScrolled ? '0.5rem' : '1rem'
+                }}
+                transition={{ duration: 0.3 }}
+                className="font-bold text-gray-700 leading-tight"
+              >
+                GELÄNDER
+              </motion.div>
+              <motion.div 
+                animate={{ 
+                  fontSize: isScrolled ? '0.75rem' : '1.5rem'
+                }}
+                transition={{ duration: 0.3 }}
+                className="font-bold text-gray-700 leading-tight"
+              >
+                KUŚ
+              </motion.div>
+            </div>
+          </a>
+        </div>
+        </NavLink>
+
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <NavLink 
-              to="/" 
-              className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
-              end
+            <motion.div 
+              className="flex items-center space-x-8"
+              animate={{ 
+                fontSize: isScrolled ? '1rem' : '1.125rem'
+              }}
+              transition={{ duration: 0.3 }}
             >
-              {navigation.home}
-            </NavLink>
-            <NavLink 
-              to="/about" 
-              className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
-            >
-              {navigation.about}
-            </NavLink>
-            <NavLink 
-              to="/services" 
-              className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
-            >
-              {navigation.services}
-            </NavLink>
-            <NavLink 
-              to="/gallery" 
-              className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
-            >
-              {navigation.gallery}
-            </NavLink>
-            <NavLink 
-              to="/contact" 
-              className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
-            >
-              {navigation.contact}
-            </NavLink>
+              <NavLink 
+                to="/" 
+                className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
+                end
+              >
+                {navigation.home}
+              </NavLink>
+              <NavLink 
+                to="/about" 
+                className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
+              >
+                {navigation.about}
+              </NavLink>
+              <NavLink 
+                to="/services" 
+                className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
+              >
+                {navigation.services}
+              </NavLink>
+              <NavLink 
+                to="/gallery" 
+                className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
+              >
+                {navigation.gallery}
+              </NavLink>
+              <NavLink 
+                to="/contact" 
+                className={({ isActive }) => isActive ? activeStyle : inactiveStyle}
+              >
+                {navigation.contact}
+              </NavLink>
+            </motion.div>
             
             {/* Language Switcher in Navbar */}
             <div className="ml-4">
@@ -141,6 +227,6 @@ export default function Navbar() {
           )}
         </AnimatePresence>
       </div>
-    </nav>
+    </motion.nav>
   );
 }
