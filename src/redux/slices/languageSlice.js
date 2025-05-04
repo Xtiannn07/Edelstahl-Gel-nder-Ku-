@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const translations = {
   // English translations 
   en: {
-    header: 'We manufacture and install stainless steel products',
+    header: "Your project. Our stainless steel.",
+    subheader: 'We manufacture and install stainless steel products',
     footer: {
       name: 'Kessler Waldemar',
       address: 'Marktplatz 2 36323 Grebenau',
@@ -77,7 +78,8 @@ const translations = {
 
   // German translations
   de: {
-    header: 'Wir fertigen und montieren Produkte aus Edelstahl',
+    header: "Dein Projekt. Unser Edelstahl.",
+    subheader: 'Wir fertigen und montieren Produkte aus Edelstahl',
     footer: {
       name: 'Kessler Waldemar',
       address: 'Marktplatz 2 36323 Grebenau',

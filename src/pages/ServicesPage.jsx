@@ -8,6 +8,7 @@ import {
   Clock, Check, ArrowRight 
 } from 'lucide-react';
 import { selectTranslations } from '../redux/slices/languageSlice';
+import Services from '../components/Services';
 import AnimatedSection from '../components/AnimatedSection';
 
 // Use client directive for client-side rendering
@@ -64,33 +65,13 @@ export default function ServicesPage() {
           </div>
         </AnimatedSection>
         
-        {/* Services List */}
-        <AnimatedSection>
-          <section className="max-w-4xl mx-auto py-8 mb-16">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold text-center mb-6">Our Services</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4 max-w-4xl mx-auto">
-                {items.map((item, index) => (
-                 <AnimatedSection animationType="slideRight">
-                    <motion.div
-                      key={index}
-                      className="flex items-start p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <span className="text-blue-600 mr-3 mt-1">
-                        <Check size={24} className="text-blue-600" />
-                      </span>
-                      <div>
-                        <h3 className="font-medium mb-1">{item}</h3>
-                      </div>
-                    </motion.div>
-                  </AnimatedSection>
-                ))}
-              </div>
+          {/* Services Section */}
+          <AnimatedSection>
+            <div className="py-16">
+              <Services />
             </div>
-          </section>
-        </AnimatedSection>
+          </AnimatedSection>
+
         
         {/* Benefits Section */}
         <section className="py-8">

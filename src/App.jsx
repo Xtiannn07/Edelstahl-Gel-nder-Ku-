@@ -31,7 +31,8 @@ function App() {
   return (
     <LanguageProvider>
       <div className="flex flex-col min-h-screen bg-white text-gray-900">
-        <Navbar />
+        {/* Keep Navbar with high z-index to ensure it stays visible */}
+        <Navbar className="relative z-50" />
         
         <main className="flex-grow">
           <AnimatePresence mode="wait">
@@ -46,7 +47,7 @@ function App() {
           </AnimatePresence>
         </main>
         
-        <Footer />
+        <Footer className="relative z-99"/>
       </div>
     </LanguageProvider>
   );

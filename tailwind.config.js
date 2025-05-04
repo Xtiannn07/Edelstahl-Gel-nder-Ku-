@@ -10,11 +10,7 @@ export default {
         title: ['"Oswald"', 'sans-serif'],
       },
       colors: {
-        'bg-left': '#e7f3ff',   // Pale lavender-blue
-        'bg-mid': '#f0f2f5',    // Neutral midpoint
-        'bg-right': '#f5f6f7',  // Warm white-gray
-
-        'primary': '#f8ce50',  // Dark blue
+        
       },
       animation: {
         bounce: 'bounce 1.5s infinite ease-in-out'

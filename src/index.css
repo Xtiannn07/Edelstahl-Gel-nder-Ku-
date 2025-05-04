@@ -5,15 +5,11 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
     background-color: #ffffff;
   }
 }
 
-h1, h2, h3, h4, h5, h6, .font-title {
+h1, h2, h3, h4, h5, h6, span, p, a, .font-title {
   font-family: 'Oswald', sans-serif;
 }
 
-.body {
-  background: linear-gradient(90deg, #f0f3ff 0%, #eef1f8 50%, #e6e8ed 100%);
-}
