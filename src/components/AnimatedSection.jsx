@@ -4,13 +4,17 @@ import { useInView } from 'framer-motion';
 
 export default function AnimatedSection({ 
   children,
-  threshold = 0.1,
   animationType = 'fadeUp'
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, threshold });
   const controls = useAnimation();
   const [hasAnimated, setHasAnimated] = useState(false);
+  
+  // Using rootMargin to trigger when element is 25% from the bottom of viewport
+  const isInView = useInView(ref, { 
+    once: false, 
+    rootMargin: "-25% 0px -75% 0px" 
+  });
 
   // Animation variants
   const animations = {
@@ -20,7 +24,7 @@ export default function AnimatedSection({
     },
     fadeIn: {
       hidden: { opacity: 0 },
-      visible: { opacity: 1, transition: { duration: 0.6 } }
+      visible: { opacity: 1, transition: { duration: 1 } }
     },
     scaleUp: {
       hidden: { opacity: 0, scale: 0.8 },

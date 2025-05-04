@@ -61,11 +61,11 @@ export default function GalleryPage() {
         transition={{ duration: 0.5 }}
       >
         {/* Hero Section */}
-        <AnimatedSection>
+        <AnimatedSection animationType="fadeIn">
           <div className="container mx-auto px-4 py-8">
             <h1 className="font-title text-4xl md:text-5xl font-bold text-center mb-4">{gallery.title}</h1>
             <div className="max-w-3xl mx-auto">
-              <p className="text-lg text-gray-700 text-center">{gallery.subtitle}
+              <p className="text-lg text-gray-700 text-center">{gallery.description}
               </p>
             </div>
           </div>

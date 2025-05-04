@@ -23,7 +23,7 @@ export default function LanguageSwitcher() {
     >
       <Globe size={16} />
       <span className="ml-1">{translations.languageSwitch}</span>
-      <span className="sr-only">Current language: {currentLanguage === 'en' ? 'English' : 'German'}</span>
+      <span className="sr-only">Current language: {currentLanguage === 'de' ? 'German' : 'English'}</span>
     </motion.button>
   );
 }

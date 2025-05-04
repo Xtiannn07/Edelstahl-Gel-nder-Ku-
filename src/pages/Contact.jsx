@@ -18,37 +18,36 @@ export default function Contact() {
         transition={{ duration: 0.5 }}
       >
         {/* Hero Section */}
-        <section className="bg-gray-100 py-16">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-center mb-8">{contact.title}</h1>
-            <div className="max-w-3xl mx-auto">
-              <p className="text-lg text-gray-700 text-center">
-                Have a question or want to discuss your project? Get in touch with us today.
-              </p>
+        <AnimatedSection animationType="fadeIn"> 
+            <div className="container mx-auto px-4 py-8">
+              <h1 className="text-4xl md:text-5xl font-bold text-center mb-8">{contact.title}</h1>
+              <div className="max-w-3xl mx-auto">
+                <p className="text-lg text-gray-700 text-center">{contact.description}
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
+        </AnimatedSection>
         
         {/* Contact Form and Information */}
         <AnimatedSection>
-          <section className="py-16 bg-white">
+          <section className=" bg-white">
             <div className="container mx-auto px-4">
               <div className="flex flex-col lg:flex-row gap-12">
                 {/* Contact Form */}
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
+                  <h2 className="text-2xl font-bold mb-6">{contact.title1}</h2>
                   <ContactForm />
                 </div>
                 
                 {/* Contact Information */}
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
+                  <h2 className="text-2xl font-bold mb-6">{contact.title2}</h2>
                   
                   <div className="flex flex-col space-y-6">
                     <div className="flex items-start">
                       <MapPin size={24} className="text-blue-600 mr-4 mt-1" />
                       <div>
-                        <h3 className="font-semibold mb-1">Address</h3>
+                        <h3 className="font-semibold mb-1">{contact.address}</h3>
                         <p className="text-gray-600">{footer.address}</p>
                         <p className="text-gray-600">{footer.country}</p>
                       </div>
@@ -57,7 +56,7 @@ export default function Contact() {
                     <div className="flex items-start">
                       <Phone size={24} className="text-blue-600 mr-4 mt-1" />
                       <div>
-                        <h3 className="font-semibold mb-1">Phone</h3>
+                        <h3 className="font-semibold mb-1">{footer.telephone}</h3>
                         <p className="text-gray-600">{footer.mobile}: +49 151 400 504 67</p>
                         <p className="text-gray-600">{footer.telephone}: +49 6646 17 18</p>
                       </div>
