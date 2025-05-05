@@ -77,8 +77,7 @@ export default function Home() {
             <Link
               to="/services"
               className="inline-flex items-center bg-stone-100 text-blue-600 px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors"
-            >
-              Explore Our Services
+            >{translations.services.cta}
               <ArrowRight size={18} className="ml-2" />
             </Link>
           </motion.div>
@@ -89,7 +88,7 @@ export default function Home() {
               {/* Replace below with your indicator icon/component */}
               <div className="flex flex-row items-center animate-bounce text-stone-100">
                 <ArrowDown size={24} className=" mr-2" />
-                  <span className="font-medium justify-center text-sm">Scroll Down</span>
+                  <span className="font-medium justify-center text-sm">{translations.scrollDown}</span>
               </div>
             </div>
 
@@ -124,7 +123,7 @@ export default function Home() {
               <div className="container mx-auto px-4 text-center text-stone-100">
                 <h2 className="text-3xl font-bold mb-6">{translations.contact.title}</h2>
                 <p className=" mb-8 max-w-2xl mx-auto">
-                  Let us help bring your vision to life with our hi gh-quality stainless steel products.
+                  {translations.contact.cta}
                 </p>
                 <motion.div
                   whileHover={{ scale: 1.05 }}

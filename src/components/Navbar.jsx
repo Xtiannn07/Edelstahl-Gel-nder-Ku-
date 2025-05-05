@@ -18,26 +18,44 @@ export default function Navbar() {
   // Close mobile menu when a link is clicked
   const closeMenu = () => setIsOpen(false);
   
-  // Handle scroll event
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-      // Check if scrolled past 25% of the viewport height
-      setIsScrolled(scrollPosition > windowHeight * 0.25);
-    };
+// Handle scroll event with debounce for stability
+useEffect(() => {
+  // Define scroll threshold
+  const scrollThreshold = window.innerHeight * 0.10;
+  
+  // Create a debounced version of the scroll handler
+  let timeoutId = null;
+  
+  const handleScroll = () => {
+    // Cancel any pending timeout
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
     
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
-    
-    // Initial check
-    handleScroll();
-    
-    // Clean up event listener on unmount
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+    // Use timeout to debounce the state update
+    timeoutId = setTimeout(() => {
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > scrollThreshold);
+      timeoutId = null;
+    }, 50); // 50ms debounce time - adjust if needed
+  };
+  
+  // Add event listener with passive option for performance
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Initial check - use setTimeout to ensure it happens after component mounts fully
+  setTimeout(() => {
+    setIsScrolled(window.scrollY > scrollThreshold);
+  }, 10);
+  
+  // Clean up
+  return () => {
+    window.removeEventListener('scroll', handleScroll);
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+  };
+}, []);
   
   // Active link styles
   const activeStyle = "text-blue-600 font-semibold";

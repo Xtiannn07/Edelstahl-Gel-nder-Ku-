@@ -103,7 +103,7 @@ export default function Gallery() {
               to="/gallery" 
               className="flex items-center text-stone-100 hover:text-blue-500 hover:underline transition-colors"
             >
-              <span className="mr-1 justify-center">View all</span>
+              <span className="mr-1 justify-center">{translations.gallery.cta}</span>
               <ArrowRight size={24} />
             </Link>
           </div>

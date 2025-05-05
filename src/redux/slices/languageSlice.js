@@ -6,17 +6,22 @@ const translations = {
   en: {
     header: "Your project. Our stainless steel.",
     subheader: 'We manufacture and install stainless steel products',
+    scrollDown: 'Scroll down',
+
     footer: {
-      name: 'Kessler Waldemar',
+      name: 'Josef Kuś',
+      description:"Professional construction services with over 25 years of experience in residential and commercial projects.",
       address: 'Marktplatz 2 36323 Grebenau',
       country: 'Germany',
       mobile: 'Mobile',
       telephone: 'Telephone',
-      email: 'E-mail'
+      email: 'E-mail',
+      contactUs: 'Contact Us'
     },
     services: {
       title: 'Our Services',
       description: "We specialize in crafting high-quality metalwork for both residential and commercial needs. Our offer includes a wide range of custom-made products such as railings, fences, gates, stair structures, and more—designed with durability, safety, and style in mind. Whether you're enhancing a home or upgrading a property, we tailor every product to match your exact requirements.",
+      cta: 'Explore our services',
       items: [
         'Railings for balconies',
         'Railings for stairs',
@@ -49,6 +54,7 @@ const translations = {
     gallery: {
       title: 'Our Work',
       description: 'Explore our portfolio of custom stainless steel projects and installations.',
+      cta: 'View All Gallery',
       all: 'All',
       railings: 'Railings',
       balconies: 'Balconies',
@@ -63,6 +69,7 @@ const translations = {
     contact: {
       title: 'Get in Touch',
       description:'Have a question or want to discuss your project? Get in touch with us today.',
+      cta:"Let us help bring your vision to life with our high-quality stainless steel products.",
       title1: 'Send Us a Message',
       title2: 'Contact Information',
       address: 'Address',
@@ -71,26 +78,28 @@ const translations = {
       message: 'Message',
       send: 'Send Message'
     },
-    testimonials: {
-      title: 'What Our Clients Say'
-    }
   },
-
+//-------------------------------------------------------------------------------------------------------------
   // German translations
   de: {
     header: "Dein Projekt. Unser Edelstahl.",
     subheader: 'Wir fertigen und montieren Produkte aus Edelstahl',
+    scrollDown: 'Nach unten scrollen',
+
     footer: {
-      name: 'Kessler Waldemar',
+      name: 'Josef Kuś',
+      description:"Professionelle Baudienstleistungen mit über 25 Jahren Erfahrung in Wohn- und Gewerbeprojekten.",
       address: 'Marktplatz 2 36323 Grebenau',
       country: 'Deutschland',
       mobile: 'Mobil',
       telephone: 'Telefon',
-      email: 'E-Mail'
+      email: 'E-Mail',
+      contactUs: 'Kontaktieren Sie uns'
     },
     services: {
       title: 'Unsere Leistungen',
       description: " Wir sind auf die Herstellung hochwertiger Metallarbeiten für private und gewerbliche Zwecke spezialisiert. Unser Angebot umfasst eine breite Palette maßgeschneiderter Produkte wie Geländer, Zäune, Tore, Treppenkonstruktionen und mehr - entworfen mit Blick auf Langlebigkeit, Sicherheit und Stil. Egal, ob Sie ein Zuhause aufwerten oder eine Immobilie modernisieren möchten, wir passen jedes Produkt an Ihre genauen Anforderungen an.",
+      cta: 'Entdecken Sie unsere Dienstleistungen',
       items: [
         'Geländer für Balkone',
         'Geländer für Treppen',
@@ -123,6 +132,7 @@ const translations = {
     gallery: {
       title: 'Unsere Arbeiten',
       description: 'Entdecken Sie unser Portfolio an kundenspezifischen Edelstahlprojekten und -installationen.',
+      cta: 'Alle Galerie anzeigen',
       all: 'Alle',
       railings: 'Geländer',
       balconies: 'Balkone',
@@ -137,6 +147,7 @@ const translations = {
     contact: {
       title: 'Nehmen Sie Kontakt auf',
       description: 'Haben Sie eine Frage oder möchten Sie Ihr Projekt besprechen? Kontaktieren Sie uns noch heute.',
+      cta: 'Lassen Sie uns Ihre Vision mit unseren hochwertigen Edelstahlprodukten zum Leben erwecken.',
       title1: 'Senden Sie uns eine Nachricht',
       title2: 'Kontaktinformationen',
       title3: 'Adresse',
@@ -146,9 +157,6 @@ const translations = {
       message: 'Nachricht',
       send: 'Nachricht senden'
     },
-    testimonials: {
-      title: 'Was unsere Kunden sagen'
-    }
   }
 };
 

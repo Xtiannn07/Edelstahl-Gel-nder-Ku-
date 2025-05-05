@@ -5,7 +5,8 @@ const translations = {
   en: {
     header: 'We manufacture and install stainless steel products',
     footer: {
-      name: 'Kessler Waldemar',
+      name: 'Josef Kuś',
+      description:"Professional construction services with over 25 years of experience in residential and commercial projects.",
       address: 'Marktplatz 2 36323 Grebenau',
       country: 'Germany',
       mobile: 'Mobile',
@@ -32,7 +33,7 @@ const translations = {
   de: {
     header: 'Wir fertigen und montieren Produkte aus Edelstahl',
     footer: {
-      name: 'Kessler Waldemar',
+      name: 'Josef Kuś',
       address: 'Marktplatz 2 36323 Grebenau',
       country: 'Deutschland',
       mobile: 'Mobil',
