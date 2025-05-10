@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
-import { Send, LogOut } from 'lucide-react';
+import { Send, LogOut, LogIn } from 'lucide-react';
 import { supabase } from '../supabase/supabaseClient';
 import { selectTranslations } from '../redux/slices/languageSlice';
 
@@ -65,6 +65,10 @@ export default function ContactForm() {
     setFormData({ name: '', message: '' });
   };
 
+  const handleLogin = async () => {
+    await supabase.auth.signInWithOAuth({ provider: 'google' });
+  };
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     setSession(null);
@@ -72,6 +76,19 @@ export default function ContactForm() {
 
   return (
     <div>
+      {!session && (
+        <motion.button
+          type="button"
+          onClick={handleLogin}
+          className="mb-6 bg-blue-600 text-white px-6 py-3 rounded-md font-medium flex items-center justify-center hover:bg-blue-700"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <LogIn size={18} className="mr-2" />
+          {contact.login_message}
+        </motion.button>
+      )}
+
       {status.submitted && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -84,7 +101,8 @@ export default function ContactForm() {
       {status.error && (
         <div className="bg-red-100 text-red-700 p-4 rounded-md mb-6">{status.error}</div>
       )}
-      <form onSubmit={handleSubmit} className="space-y-4">
+
+      <form onSubmit={handleSubmit} className={`space-y-4 ${!session ? 'pointer-events-none blur-sm opacity-50' : ''}`}>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 mb-2">{contact.name}</label>
           <input
@@ -95,6 +113,7 @@ export default function ContactForm() {
             onChange={handleChange}
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
             required
+            disabled={!session}
           />
         </div>
         <div className="mb-6">
@@ -107,6 +126,7 @@ export default function ContactForm() {
             rows="5"
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
             required
+            disabled={!session}
           ></textarea>
         </div>
         <div className="flex flex-wrap items-center gap-4">
@@ -115,6 +135,7 @@ export default function ContactForm() {
             className="min-w-[150px] bg-blue-600 text-white px-6 py-3 rounded-md font-medium flex items-center justify-center hover:bg-blue-700"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            disabled={!session}
           >
             <Send size={18} className="mr-2" />
             {session ? contact.send : 'Login with Gmail to Send'}
@@ -129,7 +150,7 @@ export default function ContactForm() {
               whileTap={{ scale: 0.98 }}
             >
               <LogOut size={18} className="mr-2" />
-              Logout
+              {contact.logout}
             </motion.button>
           )}
         </div>
