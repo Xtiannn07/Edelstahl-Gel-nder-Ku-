@@ -67,10 +67,10 @@ export default function Contact() {
                       <div>
                         <h3 className="font-semibold mb-1">Email</h3>
                         <a
-                          href="mailto:kessler-waldemar@t-online.de"
+                          href="mailto:Kus-edelstahl@web.de"
                           className="text-blue-600 hover:underline"
                         >
-                          kessler-waldemar@t-online.de
+                          Kus-edelstahl@web.de
                         </a>
                       </div>
                     </div>
