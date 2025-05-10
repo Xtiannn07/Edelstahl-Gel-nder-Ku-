@@ -1,19 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  onAuthStateChanged, 
-  signInWithEmailAndPassword,
-  signOut
-} from 'firebase/auth';
-import { auth } from '../firebase/config';
+import { supabase } from '../supabase/supabaseClient';
 
-// Create context
-const AuthContext = createContext();
-
-// List of authorized admin UIDs
-const ADMIN_UIDS = [
-  // Add your authorized admin UIDs here
-  // Example: "abc123xyz456",
-];
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
@@ -21,28 +9,55 @@ export function AuthProvider({ children }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      
-      // Check if the user is an admin
-      if (user) {
-        setIsAdmin(ADMIN_UIDS.includes(user.uid));
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      setCurrentUser(session?.user || null);
+      if (session?.user) {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .single();
+        if (!error && data?.role === 'admin') setIsAdmin(true);
+        else setIsAdmin(false);
       } else {
         setIsAdmin(false);
       }
-      
       setLoading(false);
+    };
+
+    getSession();
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setCurrentUser(session?.user || null);
+      if (session?.user) {
+        supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', session.user.id)
+          .single()
+          .then(({ data, error }) => {
+            if (!error && data?.role === 'admin') setIsAdmin(true);
+            else setIsAdmin(false);
+          });
+      } else {
+        setIsAdmin(false);
+      }
     });
 
-    return unsubscribe;
+    return () => {
+      listener?.subscription.unsubscribe();
+    };
   }, []);
 
   const login = async (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw new Error(error.message);
   };
 
-  const logout = () => {
-    return signOut(auth);
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw new Error(error.message);
   };
 
   const value = {
@@ -60,5 +75,7 @@ export function AuthProvider({ children }) {
 }
 
 export function useAuth() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  return context;
 }
