@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase/supabaseClient';
 import MessageTabs from './../components/MessageTabs';
 import MessageList from './../components/MessageList';
+import GalleryUpload from '../components/GalleryUpload';
+import { Plus, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const AdminDashboard = () => {
   const { currentUser, logout } = useAuth();
@@ -13,6 +16,7 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('all');
   const messageRef = useRef(null);
   const [unreadToUpdate, setUnreadToUpdate] = useState(new Set());
+  const [showGalleryModal, setShowGalleryModal] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -41,12 +45,10 @@ const AdminDashboard = () => {
   const updateReadMessagesInDB = async () => {
     if (unreadToUpdate.size === 0) return;
     const ids = Array.from(unreadToUpdate);
-    console.log('Updating read status for IDs:', ids);
     const { error } = await supabase.from('messages').update({ status: 'read' }).in('id', ids);
     if (error) {
       console.error('Failed to update messages:', error.message);
     } else {
-      console.log('Messages marked as read.');
       setUnreadToUpdate(new Set());
     }
   };
@@ -109,9 +111,19 @@ const AdminDashboard = () => {
       </nav>
 
       <div className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl font-bold mb-6">Inbox Messages</h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Inbox Messages</h2>
+          <button
+            onClick={() => setShowGalleryModal(true)}
+            className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          >
+            <Plus size={16} className="mr-2" />
+            Upload Gallery Image
+          </button>
+        </div>
+
         <MessageTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        <div ref={messageRef}>
+        <div ref={messageRef} className="mb-12">
           <MessageList
             messages={filteredMessages}
             expandedId={expandedId}
@@ -119,9 +131,36 @@ const AdminDashboard = () => {
           />
         </div>
       </div>
+
+      <AnimatePresence>
+        {showGalleryModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setShowGalleryModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="bg-white p-6 rounded-xl shadow-xl max-w-lg w-full relative border border-gray-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="absolute -top-3 -right-3 bg-white rounded-full shadow p-1 text-gray-500 hover:text-gray-700"
+                onClick={() => setShowGalleryModal(false)}
+              >
+                <X size={20} />
+              </button>
+              <GalleryUpload />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 export default AdminDashboard;
-
