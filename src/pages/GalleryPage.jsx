@@ -14,15 +14,17 @@ export default function GalleryPage() {
       const { data, error } = await supabase
         .from('gallery')
         .select('*')
-        .order('uploaded_at', { ascending: false });
+        .order('created_at', { ascending: false });
+
       if (!error && data) setImages(data);
     };
+
     fetchImages();
   }, []);
 
   const filtered = activeFilter === 'all'
     ? images
-    : images.filter(img => img.categories.includes(activeFilter));
+    : images.filter(img => Array.isArray(img.categories) && img.categories.includes(activeFilter));
 
   const categories = ['all', 'railings', 'balconies', 'fences', 'gates', 'grilles'];
 
@@ -50,18 +52,20 @@ export default function GalleryPage() {
         <AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
             {filtered.map(image => (
-              <div
-                key={image.id}
-                className="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow group relative cursor-pointer"
-                style={{ aspectRatio: '4/3' }}
-                onClick={() => setSelectedImage(image)}
-              >
-                <img
-                  src={image.image_url}
-                  alt="Gallery Item"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
+              <AnimatedSection key={image.id} animationType="fadeIn">
+                <div
+                  key={image.id}
+                  className="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow group relative cursor-pointer"
+                  style={{ aspectRatio: '4 / 3' }}
+                  onClick={() => setSelectedImage(image)}
+                >
+                  <img
+                    src={image.image_url}
+                    alt={`Gallery - ${image.categories}`}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </AnimatedSection>
             ))}
           </div>
 
