@@ -20,43 +20,43 @@ export default function Footer() {
           
           
           {/* Contact Information */}
-          <div>
-            <h3 className="text-xl font-semibold mb-4">{translations.contact.contactUs}</h3>
-            <address className="not-italic space-y-3">
-              <div className="flex items-start">
-                <MapPin size={20} className="mr-2 mt-1 flex-shrink-0 text-blue-300" />
-                <div>
-                  <p>{translations.footer.address}</p>
-                  <p>{translations.footer.country}</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center">
-                <Phone size={20} className="mr-2 flex-shrink-0 text-blue-300" />
-                <p><span className="font-medium">{translations.footer.mobile}:</span> 0175-7150-358</p>
-              </div>
-              
-              <div className="flex items-center">
-                <Phone size={20} className="mr-2 flex-shrink-0 text-blue-300" />
-                <p><span className="font-medium">{translations.footer.telephone}:</span> +49 6646 17 18</p>
-              </div>
-              
-              <div className="flex items-center">
-                <Mail size={20} className="mr-2 flex-shrink-0 text-blue-300" />
-                <a 
-                  href="mailto:Kus-edelstahl@web.de" 
-                  className="text-blue-300 hover:text-blue-100 transition-colors"
-                >
-                  Kus-edelstahl@web.de
-                </a>
-              </div>
-              
-              <div className="flex items-center">
-                <Clock size={20} className="mr-2 flex-shrink-0 text-blue-300" />
-                <p>Mon-Fri: 8:00 - 17:00</p>
-              </div>
-            </address>
-          </div>
+<div>
+  <h3 className="text-xl font-semibold mb-4">{translations.contact.contactUs}</h3>
+  <address className="not-italic grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="flex items-start">
+      <MapPin size={20} className="mr-2 mt-1 flex-shrink-0 text-blue-300" />
+      <div>
+        <p>{translations.footer.address}</p>
+        <p>{translations.footer.country}</p>
+      </div>
+    </div>
+
+    <div className="flex items-center">
+      <Phone size={20} className="mr-2 flex-shrink-0 text-blue-300" />
+      <p><span className="font-medium">{translations.footer.mobile}:</span> 0175-7150-358</p>
+    </div>
+
+    <div className="flex items-center">
+      <Phone size={20} className="mr-2 flex-shrink-0 text-blue-300" />
+      <p><span className="font-medium">{translations.footer.telephone}:</span> +49 6646 17 18</p>
+    </div>
+
+    <div className="flex items-center">
+      <Mail size={20} className="mr-2 flex-shrink-0 text-blue-300" />
+      <a 
+        href="mailto:Kus-edelstahl@web.de" 
+        className="text-blue-300 hover:text-blue-100 transition-colors"
+      >
+        Kus-edelstahl@web.de
+      </a>
+    </div>
+
+    <div className="flex items-center">
+      <Clock size={20} className="mr-2 flex-shrink-0 text-blue-300" />
+      <p>Mon-Fri: 8:00 - 17:00</p>
+    </div>
+  </address>
+</div>
         </div>
         
         {/* Bottom Footer */}

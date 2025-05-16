@@ -8,15 +8,18 @@ export default function GalleryPage() {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchImages = async () => {
+      setLoading(true);
       const { data, error } = await supabase
         .from('gallery')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (!error && data) setImages(data);
+      setLoading(false);
     };
 
     fetchImages();
@@ -29,7 +32,7 @@ export default function GalleryPage() {
   const categories = ['all', 'railings', 'balconies', 'fences', 'gates', 'grilles'];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pb-16">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
         <AnimatedSection animationType="fadeIn">
           <div className="container mx-auto px-4 py-8">
@@ -50,27 +53,35 @@ export default function GalleryPage() {
         </AnimatedSection>
 
         <AnimatedSection>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-            {filtered.map(image => (
-              <AnimatedSection key={image.id} animationType="fadeIn">
-                <div
-                  key={image.id}
-                  className="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow group relative cursor-pointer"
-                  style={{ aspectRatio: '4 / 3' }}
-                  onClick={() => setSelectedImage(image)}
-                >
-                  <img
-                    src={image.image_url}
-                    alt={`Gallery - ${image.categories}`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+                {filtered.map(image => (
+                  <AnimatedSection key={image.id} animationType="fadeIn">
+                    <div
+                      key={image.id}
+                      className="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow group relative cursor-pointer"
+                      style={{ aspectRatio: '4 / 3' }}
+                      onClick={() => setSelectedImage(image)}
+                    >
+                      <img
+                        src={image.image_url}
+                        alt={`Gallery - ${image.categories}`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  </AnimatedSection>
+                ))}
+              </div>
 
-          {filtered.length === 0 && (
-            <div className="text-center text-gray-500 py-8">No images found.</div>
+              {filtered.length === 0 && (
+                <div className="text-center text-gray-500 py-8">No images found.</div>
+              )}
+            </>
           )}
         </AnimatedSection>
 
