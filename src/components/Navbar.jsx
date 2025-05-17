@@ -198,7 +198,7 @@ useEffect(() => {
               transition={{ duration: 0.3 }}
               className="md:hidden overflow-hidden"
             >
-              <div className="py-4 flex flex-col space-y-4">
+              <div className="py-4 flex flex-col px-4 text-xs">
                 <NavLink 
                   to="/" 
                   className={({ isActive }) => `block py-2 ${isActive ? activeStyle : inactiveStyle}`}

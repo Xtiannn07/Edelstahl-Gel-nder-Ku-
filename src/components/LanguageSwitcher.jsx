@@ -15,7 +15,7 @@ export default function LanguageSwitcher() {
   return (
     <motion.button 
       onClick={handleToggle}
-      className="flex items-center space-x-1 bg-gray-600 text-white px-3 py-1.5 rounded-full 
+      className="flex items-center space-x-1 bg-gray-600 text-white px-3 py-1 md:py-1.5 rounded-full 
                 hover:bg-blue-700 transition-colors shadow-md font-medium text-sm"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
