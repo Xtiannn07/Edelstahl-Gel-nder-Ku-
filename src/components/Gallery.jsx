@@ -97,11 +97,11 @@ export default function Gallery() {
     <AnimatedSection>
       <section className=" ">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="ml-2 text-3xl font-bold text-stone-100">{translations.gallery?.title || "Our Work"}</h2>
+          <div className="flex justify-between items-center mb-2 md:mb-8">
+            <h2 className="ml-2 text-xl md:text-3xl font-bold text-stone-100">{translations.gallery?.title || "Our Work"}</h2>
             <Link 
               to="/gallery" 
-              className="flex items-center text-stone-100 hover:text-blue-500 hover:underline transition-colors"
+              className="flex items-center text-sm md:text-xl text-stone-100 hover:text-blue-500 hover:underline transition-colors"
             >
               <span className="mr-1 justify-center">{translations.gallery.cta}</span>
               <ArrowRight size={24} />
@@ -146,10 +146,10 @@ export default function Gallery() {
           <div className="pb-8 mt-8 text-center sm:hidden">
             <Link 
               to="/gallery" 
-              className="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center justify-center bg-blue-500 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors"
             >
               <Image size={18} className="mr-2" />
-              View All Gallery
+              {translations.gallery.cta}
             </Link>
           </div>
         </div>

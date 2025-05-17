@@ -13,23 +13,23 @@ export default function AboutUs() {
   const features = [
     {
       icon: <Award size={24} className="text-blue-600" />,
-      title: "Quality Craftsmanship",
-      description: "We take pride in our precision engineering and meticulous attention to detail."
+      title: about.item1_title,
+      description: about.item1_des
     },
     {
       icon: <Wrench size={24} className="text-blue-600" />,
-      title: "Custom Solutions",
-      description: "Every project is unique, and we create tailored solutions to match your specific needs."
+      title: about.item2_title,
+      description: about.item2_des
     },
     {
       icon: <Clock size={24} className="text-blue-600" />,
-      title: "Timely Delivery",
-      description: "We understand the importance of deadlines and ensure prompt project completion."
+      title: about.item3_title,
+      description: about.item3_des
     },
     {
       icon: <Users size={24} className="text-blue-600" />,
-      title: "Customer Satisfaction",
-      description: "Our customers' satisfaction is our top priority, with clear communication throughout the process."
+      title: about.item4_title,
+      description: about.item4_des
     }
   ];
   
@@ -56,7 +56,7 @@ export default function AboutUs() {
         <AnimatedSection>
           <section className="py-16 bg-white">
             <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
+              <h2 className="text-3xl font-bold text-center mb-12">{about.title2}</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {features.map((feature, index) => (
@@ -80,21 +80,11 @@ export default function AboutUs() {
         <AnimatedSection animationType="fadeIn">
           <section className="py-16 bg-gray-100">
             <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold text-center mb-8">Our History</h2>
+              <h2 className="text-3xl font-bold text-center mb-8">{about.history}</h2>
               <div className="max-w-3xl mx-auto">
-                <p className="text-gray-700 mb-4">
-                  Since our establishment, Kessler Construction Services has been dedicated to providing the highest 
-                  quality stainless steel products for residential and commercial properties. 
-                </p>
-                <p className="text-gray-700 mb-4">
-                  Our journey began with a passion for metalwork and a vision to create functional yet beautiful 
-                  structural elements that would stand the test of time. Over the years, we've refined our 
-                  techniques and expanded our capabilities, while maintaining our commitment to excellence.
-                </p>
-                <p className="text-gray-700">
-                  Today, we continue to serve our clients with the same dedication to quality and 
-                  customer satisfaction that has been our hallmark since day one.
-                </p>
+                <p className="text-gray-700 mb-4">{about.des1}</p>
+                <p className="text-gray-700 mb-4">{about.des2} </p>
+                <p className="text-gray-700">{about.des3}</p>
               </div>
             </div>
           </section>

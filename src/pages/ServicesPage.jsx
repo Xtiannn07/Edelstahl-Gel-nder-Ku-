@@ -110,7 +110,7 @@ export default function ServicesPage() {
         
         {/* Call to Action */}
         <AnimatedSection>
-          <section className="p-8">
+          <section className="p-4 mb-8">
             <div className="container mx-auto px-4 max-w-6xl">
               <div className="bg-gradient-to-r from-gray-100 to-gray-200 rounded-2xl p-10 shadow-sm">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-8">

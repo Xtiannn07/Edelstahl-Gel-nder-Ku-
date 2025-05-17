@@ -64,7 +64,20 @@ const translations = {
     },
     about: {
       title: 'About Us',
-      description: 'With years of experience in manufacturing and installing high-quality stainless steel products, we pride ourselves on craftsmanship, attention to detail, and customer satisfaction. Our dedicated team ensures that each project meets the highest standards of quality and design.'
+      description: 'With years of experience in manufacturing and installing high-quality stainless steel products, we pride ourselves on craftsmanship, attention to detail, and customer satisfaction. Our dedicated team ensures that each project meets the highest standards of quality and design.',
+      title2: "Why Choose Us",
+      item1_title: "Quality Craftsmanship",
+      item1_des: "We take pride in our precision engineering and meticulous attention to detail.",
+      item2_title: "Custom Solutions",
+      item2_des: "Every project is unique, and we create tailored solutions to match your specific needs.",
+      item3_title: "Timely Delivery",
+      item3_des: "We understand the importance of deadlines and ensure prompt project completion.",
+      item4_title: "Customer Satisfaction",
+      item4_des: "Our customers' satisfaction is our top priority, with clear communication throughout the process.",
+      history: "Our History",
+      des1: "Since our establishment, Kessler Construction Services has been dedicated to providing the highest quality stainless steel products for residential and commercial properties.",
+      des2: "Our journey began with a passion for metalwork and a vision to create functional yet beautiful structural elements that would stand the test of time. Over the years, we've refined our techniques and expanded our capabilities, while maintaining our commitment to excellence.",
+      des3: "Today, we continue to serve our clients with the same dedication to quality and customer satisfaction that has been our hallmark since day one."
     },
     contact: {
       title: 'Get in Touch',
@@ -144,7 +157,20 @@ const translations = {
     },
     about: {
       title: 'Über Uns',
-      description: 'Mit jahrelanger Erfahrung in der Herstellung und Montage hochwertiger Edelstahlprodukte sind wir stolz auf handwerkliches Können, Liebe zum Detail und Kundenzufriedenheit. Unser engagiertes Team sorgt dafür, dass jedes Projekt den höchsten Qualitäts- und Designstandards entspricht.'
+      description: 'Mit jahrelanger Erfahrung in der Herstellung und Montage hochwertiger Edelstahlprodukte sind wir stolz auf handwerkliches Können, Liebe zum Detail und Kundenzufriedenheit. Unser engagiertes Team sorgt dafür, dass jedes Projekt den höchsten Qualitäts- und Designstandards entspricht.',
+      title2: "Warum sollten Sie sich für uns entscheiden?",
+      item1_title: "Hochwertige Handwerkskunst",
+      item1_des: "Wir sind stolz auf unsere Präzisionstechnik und unsere akribische Liebe zum Detail.",
+      item2_title: "Maßgeschneiderte Lösungen",
+      item2_des: "Jedes Projekt ist einzigartig und wir entwickeln maßgeschneiderte Lösungen, die Ihren spezifischen Anforderungen entsprechen.",
+      item3_title: "Pünktliche Lieferung",
+      item3_des: "Wir sind uns der Bedeutung von Terminen bewusst und sorgen für eine zügige Projektabwicklung.",
+      item4_title: "Kundenzufriedenheit",
+      item4_des: "Die Zufriedenheit unserer Kunden hat für uns oberste Priorität und wir kommunizieren während des gesamten Prozesses klar und deutlich.",
+      history: "Unsere Geschichte",
+      des1: "Seit unserer Gründung hat sich Kessler Construction Services der Bereitstellung von Edelstahlprodukten höchster Qualität für Wohn- und Gewerbeimmobilien verschrieben.",
+      des2: "Unsere Reise begann mit der Leidenschaft für Metallverarbeitung und der Vision, funktionale und zugleich schöne Konstruktionselemente zu schaffen, die den Anforderungen der Zeit standhalten. Im Laufe der Jahre haben wir unsere Techniken verfeinert und unsere Fähigkeiten erweitert, ohne dabei unseren Anspruch an Exzellenz zu vernachlässigen.",
+      des3: "Auch heute noch betreuen wir unsere Kunden mit der gleichen Hingabe an Qualität und Kundenzufriedenheit, die seit dem ersten Tag unser Markenzeichen ist."
     },
     contact: {
       title: 'Nehmen Sie Kontakt auf',

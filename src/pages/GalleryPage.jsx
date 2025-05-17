@@ -1,7 +1,9 @@
 // src/pages/GalleryPage.jsx
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { supabase } from '../supabase/supabaseClient';
+import { selectTranslations } from '../redux/slices/languageSlice';
 import AnimatedSection from '../components/AnimatedSection';
 
 export default function GalleryPage() {
@@ -9,6 +11,19 @@ export default function GalleryPage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+
+  const translations = useSelector(selectTranslations);
+  const { gallery } = translations;
+
+  // Map value (used for filtering) to label (used for display)
+  const categoryDefs = [
+    { value: 'all', label: gallery.all },
+    { value: 'railings', label: gallery.railings },
+    { value: 'balconies', label: gallery.balconies },
+    { value: 'fences', label: gallery.fences },
+    { value: 'gates', label: gallery.gates },
+    { value: 'grilles', label: gallery.grilles }
+  ];
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -25,27 +40,29 @@ export default function GalleryPage() {
     fetchImages();
   }, []);
 
+  // Only filter by value, not by label (translations)
   const filtered = activeFilter === 'all'
     ? images
-    : images.filter(img => Array.isArray(img.categories) && img.categories.includes(activeFilter));
-
-  const categories = ['all', 'railings', 'balconies', 'fences', 'gates', 'grilles'];
+    : images.filter(img =>
+        Array.isArray(img.categories) &&
+        img.categories.includes(activeFilter)
+      );
 
   return (
     <div className="min-h-screen pb-16">
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
         <AnimatedSection animationType="fadeIn">
           <div className="container mx-auto px-4 py-8">
-            <h1 className="text-4xl font-bold text-center mb-4">Gallery</h1>
-            <p className="text-center text-gray-600 mb-8">Browse images by category.</p>
+            <h1 className="text-4xl font-bold text-center mb-4">{gallery.title}</h1>
+            <p className="text-center text-gray-600 mb-8">{gallery.description}</p>
             <div className="flex justify-center gap-2 flex-wrap">
-              {categories.map(cat => (
+              {categoryDefs.map(cat => (
                 <button
-                  key={cat}
-                  onClick={() => setActiveFilter(cat)}
-                  className={`px-3 py-1 rounded-full text-sm ${activeFilter === cat ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+                  key={cat.value}
+                  onClick={() => setActiveFilter(cat.value)}
+                  className={`px-3 py-1 rounded-full text-sm ${activeFilter === cat.value ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
                 >
-                  {cat}
+                  {cat.label}
                 </button>
               ))}
             </div>

@@ -11,7 +11,7 @@ export default function Contact() {
   const { contact, footer } = translations;
   
   return (
-    <div className="min-h-screen max-w-7xl mx-auto">
+    <div className="min-h-screen max-w-7xl mx-auto mb-16 md:mb-1">
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -34,7 +34,7 @@ export default function Contact() {
             <div className="container mx-auto px-4">
               <div className="flex flex-col lg:flex-row gap-12">
                 {/* Contact Form */}
-                <div className="flex-1">
+                <div className="flex-1 mb-16">
                   <h2 className="text-2xl font-bold mb-6">{contact.title1}</h2>
                   <ContactForm />
                 </div>
