@@ -5,17 +5,22 @@ import { motion } from 'framer-motion';
 import { supabase } from '../supabase/supabaseClient';
 import { selectTranslations } from '../redux/slices/languageSlice';
 import AnimatedSection from '../components/AnimatedSection';
+import { MoreVertical } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function GalleryPage() {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [menuOpenId, setMenuOpenId] = useState(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState(null);
+  const [toastMessage, setToastMessage] = useState('');
 
   const translations = useSelector(selectTranslations);
   const { gallery } = translations;
+  const { currentUser } = useAuth();
 
-  // Map value (used for filtering) to label (used for display)
   const categoryDefs = [
     { value: 'all', label: gallery.all },
     { value: 'railings', label: gallery.railings },
@@ -26,21 +31,57 @@ export default function GalleryPage() {
   ];
 
   useEffect(() => {
-    const fetchImages = async () => {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from('gallery')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (!error && data) setImages(data);
-      setLoading(false);
-    };
-
     fetchImages();
   }, []);
 
-  // Only filter by value, not by label (translations)
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => setToastMessage(''), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
+
+  const fetchImages = async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('gallery')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (!error && data) setImages(data);
+    setLoading(false);
+  };
+
+  const deleteImage = async (id) => {
+    const imageToDelete = images.find((img) => img.id === id);
+    if (!imageToDelete) return;
+
+    const imageUrl = imageToDelete.image_url;
+    const imagePath = imageUrl.split('/').slice(-1)[0];
+
+    const { error: storageError } = await supabase.storage
+      .from('gallery')
+      .remove([imagePath]);
+
+    if (storageError) {
+      console.error('Storage deletion failed:', storageError.message);
+      setToastMessage('Failed to delete image from storage.');
+      return;
+    }
+
+    const { error } = await supabase.from('gallery').delete().eq('id', id);
+    if (error) {
+      console.error('Error deleting image:', error.message);
+      setToastMessage('Failed to delete image.');
+      return;
+    }
+
+    setImages((prev) => prev.filter((img) => img.id !== id));
+    setMenuOpenId(null);
+    setConfirmDeleteId(null);
+    setToastMessage('Image deleted successfully.');
+  };
+
   const filtered = activeFilter === 'all'
     ? images
     : images.filter(img =>
@@ -80,16 +121,38 @@ export default function GalleryPage() {
                 {filtered.map(image => (
                   <AnimatedSection key={image.id} animationType="fadeIn">
                     <div
-                      key={image.id}
-                      className="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow group relative cursor-pointer"
+                      className="aspect-w-4 aspect-h-3 overflow-hidden rounded-lg shadow group relative"
                       style={{ aspectRatio: '4 / 3' }}
-                      onClick={() => setSelectedImage(image)}
                     >
                       <img
                         src={image.image_url}
                         alt={`Gallery - ${image.categories}`}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onClick={() => setSelectedImage(image)}
                       />
+                      {currentUser && (
+                        <div className="absolute top-2 right-2 z-10">
+                          <button
+                            className="p-1 rounded-lg shadow bg-white/30 hover:bg-gray-100 backdrop-blur-sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setMenuOpenId(menuOpenId === image.id ? null : image.id);
+                            }}
+                          >
+                            <MoreVertical size={20} className="text-black/50"/>
+                          </button>
+                          {menuOpenId === image.id && (
+                            <div className="absolute right-0 mt-2 bg-white border shadow rounded p-2">
+                              <button
+                                onClick={() => setConfirmDeleteId(image.id)}
+                                className="text-sm text-red-500 hover:underline"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </AnimatedSection>
                 ))}
@@ -102,8 +165,39 @@ export default function GalleryPage() {
           )}
         </AnimatedSection>
 
+        {confirmDeleteId && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded shadow-lg w-full max-w-sm">
+              <p className="mb-4 text-gray-800">Are you sure you want to delete this image?</p>
+              <div className="flex justify-end gap-2">
+                <button
+                  className="px-4 py-1 bg-gray-200 rounded hover:bg-gray-300"
+                  onClick={() => setConfirmDeleteId(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="px-4 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                  onClick={() => deleteImage(confirmDeleteId)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {toastMessage && (
+          <div className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow z-50">
+            {toastMessage}
+          </div>
+        )}
+
         {selectedImage && (
-          <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onClick={() => setSelectedImage(null)}>
+          <div
+            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
             <div className="max-w-4xl max-h-[90vh] relative" onClick={e => e.stopPropagation()}>
               <img
                 src={selectedImage.image_url}

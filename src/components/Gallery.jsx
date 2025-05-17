@@ -4,24 +4,56 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Image, X } from 'lucide-react';
 import { supabase } from '../supabase/supabaseClient';
 import AnimatedSection from './AnimatedSection';
+import { selectTranslations } from '../redux/slices/languageSlice';
+import { useSelector } from 'react-redux';
 
-export default function Gallery({ translations }) {
+// Change categories here if needed:
+const CATEGORIES = ['railings', 'balconies', 'fences', 'gates', 'grilles'];
+
+export default function Gallery() {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [columns, setColumns] = useState(3);
   const modalRef = useRef(null);
+  const translations = useSelector(selectTranslations);
+  const { gallery } = translations;
 
-  // Fetch latest 6 images from Supabase
   useEffect(() => {
     const fetchImages = async () => {
       setLoading(true);
+      // Fetch a bunch, newest first
       const { data, error } = await supabase
         .from('gallery')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(6);
-      if (!error && data) setImages(data);
+        .limit(50);
+      if (!error && data) {
+        // Group by category, pick top 2 per category
+        const imagesByCat = {};
+        for (let cat of CATEGORIES) imagesByCat[cat] = [];
+        for (let img of data) {
+          if (Array.isArray(img.categories)) {
+            img.categories.forEach(cat => {
+              if (CATEGORIES.includes(cat) && imagesByCat[cat].length < 2) {
+                imagesByCat[cat].push(img);
+              }
+            });
+          }
+        }
+        // Flatten, dedupe by id
+        const deduped = [];
+        const seen = new Set();
+        for (let cat of CATEGORIES) {
+          for (let img of imagesByCat[cat]) {
+            if (!seen.has(img.id)) {
+              deduped.push(img);
+              seen.add(img.id);
+            }
+          }
+        }
+        setImages(deduped);
+      }
       setLoading(false);
     };
     fetchImages();
@@ -89,23 +121,19 @@ export default function Gallery({ translations }) {
 
   const masonryColumns = createMasonryLayout();
 
-  // Default fallback translations
-  const galleryTitle = translations?.gallery?.title || "Our Work";
-  const galleryCTA = translations?.gallery?.cta || "View All";
-
   return (
     <AnimatedSection>
       <section>
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center mb-2 md:mb-8">
             <h2 className="ml-2 text-xl md:text-3xl font-bold text-stone-100">
-              {galleryTitle}
+              {gallery.title}
             </h2>
             <Link
               to="/gallery"
               className="flex items-center text-sm text-stone-100 hover:text-blue-500 hover:underline transition-colors"
             >
-              <span className="mr-1 justify-center">{galleryCTA}</span>
+              <span className="mr-1 justify-center">{gallery.cta}</span>
               <ArrowRight size={24} />
             </Link>
           </div>
@@ -154,7 +182,7 @@ export default function Gallery({ translations }) {
               className="inline-flex items-center justify-center bg-blue-500 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors"
             >
               <Image size={18} className="mr-2" />
-              {galleryCTA}
+              {gallery.cta}
             </Link>
           </div>
         </div>
