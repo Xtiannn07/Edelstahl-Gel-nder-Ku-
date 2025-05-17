@@ -20,15 +20,11 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
-import { fetchGalleryImages } from './redux/slices/gallerySlice';
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  useEffect(() => {
-    dispatch(fetchGalleryImages());
-  }, [dispatch]);
 
   return (
     <AuthProvider>

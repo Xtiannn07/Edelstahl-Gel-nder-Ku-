@@ -11,7 +11,7 @@ const translations = {
     footer: {
       name: 'Josef Kuś',
       description:"Professional construction services with over 25 years of experience in residential and commercial projects.",
-      address: 'Marktplatz 2 36323 Grebenau',
+      address: 'Schmiedegraben 2 36323 Grebenau',
       country: 'Germany',
       mobile: 'Mobile',
       telephone: 'Telephone',
@@ -104,7 +104,7 @@ const translations = {
     footer: {
       name: 'Josef Kuś',
       description:"Professionelle Baudienstleistungen mit über 25 Jahren Erfahrung in Wohn- und Gewerbeprojekten.",
-      address: 'Marktplatz 2 36323 Grebenau',
+      address: 'Schmiedegraben 2 36323 Grebenau',
       country: 'Deutschland',
       mobile: 'Mobil',
       telephone: 'Telefon',

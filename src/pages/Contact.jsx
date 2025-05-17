@@ -58,7 +58,7 @@ export default function Contact() {
                       <div>
                         <h3 className="font-semibold mb-1">{footer.telephone}</h3>
                         <p className="text-gray-600">{footer.mobile}: +49 151 400 504 67</p>
-                        <p className="text-gray-600">{footer.telephone}: +49 6646 17 18</p>
+                        <p className="text-gray-600">{footer.mobile}: +0175-7150-358</p>
                       </div>
                     </div>
                     

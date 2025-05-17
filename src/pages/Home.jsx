@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowDown } from 'lucide-react';
-import { fetchGalleryImages } from '../redux/slices/gallerySlice';
 import { selectTranslations } from '../redux/slices/languageSlice';
 import AnimatedHeader from '../components/AnimatedHeader';
 import Gallery from '../components/Gallery';
@@ -28,10 +27,6 @@ export default function Home() {
   // Calculate blur amount based on scroll position
   const blurAmount = Math.min(5, scrollY / 100); // Max blur of 10px
   
-  // Fetch gallery images when component mounts
-  useEffect(() => {
-    dispatch(fetchGalleryImages());
-  }, [dispatch]);
   
   return (
     <div className="min-h-screen relative">

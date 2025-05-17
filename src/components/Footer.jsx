@@ -36,7 +36,7 @@ export default function Footer() {
 
               <div className="flex items-center text-xs md:text-lg">
                 <Phone size={20} className="mr-2 flex-shrink-0 text-blue-300" />
-                <p><span className="font-medium">{translations.footer.telephone}:</span> +49 6646 17 18</p>
+                <p><span className="font-medium">{translations.footer.mobile}:</span> 49 151 400 504 67</p>
               </div>
 
               <div className="flex items-center text-xs md:text-lg">
