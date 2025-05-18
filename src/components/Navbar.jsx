@@ -62,14 +62,17 @@ useEffect(() => {
   const inactiveStyle = "text-gray-700 hover:text-blue-600 transition-colors";
   
   return (
-    <motion.nav 
-      className="bg-stone-300 shadow-md sticky top-0 z-40"
-      animate={{
-        paddingTop: isScrolled ? '0.25rem' : '0.5rem',
-        paddingBottom: isScrolled ? '0.25rem' : '0.5rem'
-      }}
-      transition={{ duration: 0.3 }}
-    >
+      <motion.nav 
+        className="bg-stone-300 shadow-md sticky top-0 z-40"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          paddingTop: isScrolled ? '0.25rem' : '0.5rem',
+          paddingBottom: isScrolled ? '0.25rem' : '0.5rem'
+        }}
+        transition={{ duration: 1 }}
+      >
       <div className="container mx-auto px-2 pr-10 md:px-12">
         <div className="flex justify-between items-center">
         {/* Logo/Brand */}
@@ -78,6 +81,7 @@ useEffect(() => {
           <a href="/" className="flex items-center">
             <motion.div
               className="flex items-center justify-center"
+              initial={false}
               animate={{ 
                 height: isScrolled ? '3.5rem' : '5rem',
                 width: isScrolled ? '3.5rem' : '5rem'
@@ -94,6 +98,7 @@ useEffect(() => {
             
             <div className="flex flex-col">
               <motion.div 
+                initial={false}
                 animate={{ 
                   fontSize: isScrolled ? '0.5rem' : '1rem'
                 }}
@@ -103,6 +108,7 @@ useEffect(() => {
                 EDELSTAHL-
               </motion.div>
               <motion.div 
+                initial={false}
                 animate={{ 
                   fontSize: isScrolled ? '0.5rem' : '1rem'
                 }}
@@ -112,6 +118,7 @@ useEffect(() => {
                 GELÄNDER
               </motion.div>
               <motion.div 
+                initial={false}
                 animate={{ 
                   fontSize: isScrolled ? '0.75rem' : '1.5rem'
                 }}
@@ -130,6 +137,7 @@ useEffect(() => {
           <div className="hidden md:flex items-center space-x-8">
             <motion.div 
               className="flex items-center space-x-8"
+              initial={false}
               animate={{ 
                 fontSize: isScrolled ? '1rem' : '1.125rem'
               }}
