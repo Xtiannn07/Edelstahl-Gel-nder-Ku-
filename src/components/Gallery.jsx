@@ -8,7 +8,7 @@ import { selectTranslations } from '../redux/slices/languageSlice';
 import { useSelector } from 'react-redux';
 
 // Change categories here if needed:
-const CATEGORIES = ['railings', 'balconies', 'fences', 'gates', 'grilles'];
+const CATEGORIES = ['balconies', 'fences', 'gates', 'grilles','stairs'];
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
