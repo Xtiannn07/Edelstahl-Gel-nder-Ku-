@@ -117,7 +117,7 @@ const translations = {
       cta: 'Entdecken Sie unsere Dienstleistungen',
       items: [
         'Geländer für Balkone',
-        'Geländer für Treppen',
+        'Treppengeländer',
         'Französische Balkone',
         'Zäune',
         'Tore',
