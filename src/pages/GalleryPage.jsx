@@ -23,11 +23,11 @@ export default function GalleryPage() {
 
   const categoryDefs = [
     { value: 'all', label: gallery.all },
-    { value: 'railings', label: gallery.railings },
     { value: 'balconies', label: gallery.balconies },
     { value: 'fences', label: gallery.fences },
     { value: 'gates', label: gallery.gates },
-    { value: 'grilles', label: gallery.grilles }
+    { value: 'grilles', label: gallery.grilles },
+    { value: 'stairs', label: gallery.stairs },
   ];
 
   useEffect(() => {

@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabase/supabaseClient';
 
-const categoryOptions = ['railings', 'balconies', 'fences', 'gates', 'grilles'];
+const categoryOptions = ['stairs', 'balconies', 'fences', 'gates', 'grilles'];
 
 export default function GalleryUpload({ onSuccess }) {
   const [file, setFile] = useState(null);

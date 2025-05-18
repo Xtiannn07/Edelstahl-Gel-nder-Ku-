@@ -30,7 +30,7 @@ const translations = {
         'Gates',
         'Stair constructions',
         'Small roofs and coverings',
-        'Window grilles',
+        'Double rod mesh fence',
         'Decorative elements',
         'And many other products, made to customer order'
       ],
@@ -56,7 +56,7 @@ const translations = {
       description: 'Explore our portfolio of custom stainless steel projects and installations.',
       cta: 'View All Gallery',
       all: 'All',
-      railings: 'Railings',
+      stairs: 'Stairs Railings',
       balconies: 'Balconies',
       fences: 'Fences',
       gates: 'Gates',
@@ -123,7 +123,7 @@ const translations = {
         'Tore',
         'Treppenkonstruktionen',
         'Kleine Dächer und Überdachungen',
-        'Fenstergitter',
+        'Doppelstabmattenzaun',
         'Dekorative Elemente',
         'Und viele andere Produkte, nach Kundenauftrag gefertigt'
       ],
@@ -149,7 +149,7 @@ const translations = {
       description: 'Entdecken Sie unser Portfolio an kundenspezifischen Edelstahlprojekten und -installationen.',
       cta: 'Alle Galerie anzeigen',
       all: 'Alle',
-      railings: 'Geländer',
+      stairs: 'Treppengeländer',
       balconies: 'Balkone',
       fences: 'Zäune',
       gates: 'Tore',
@@ -193,8 +193,8 @@ const translations = {
 export const languageSlice = createSlice({
   name: 'language',
   initialState: {
-    currentLanguage: 'en',
-    translations: translations.en
+    currentLanguage: 'de',
+    translations: translations.de
   },
   reducers: {
     toggleLanguage: (state) => {
