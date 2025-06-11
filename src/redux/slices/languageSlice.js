@@ -75,7 +75,7 @@ const translations = {
       item4_title: "Customer Satisfaction",
       item4_des: "Our customers' satisfaction is our top priority, with clear communication throughout the process.",
       history: "Our History",
-      des1: "Since our establishment, Our company has been dedicated to providing the highest quality stainless steel products for residential and commercial properties.",
+      des1: "Since our establishment, Kus edelstahl has been dedicated to providing the highest quality stainless steel products for residential and commercial properties.",
       des2: "Our journey began with a passion for metalwork and a vision to create functional yet beautiful structural elements that would stand the test of time. Over the years, we've refined our techniques and expanded our capabilities, while maintaining our commitment to excellence.",
       des3: "Today, we continue to serve our clients with the same dedication to quality and customer satisfaction that has been our hallmark since day one."
     },
@@ -168,7 +168,7 @@ const translations = {
       item4_title: "Kundenzufriedenheit",
       item4_des: "Die Zufriedenheit unserer Kunden hat für uns oberste Priorität und wir kommunizieren während des gesamten Prozesses klar und deutlich.",
       history: "Unsere Geschichte",
-      des1: "Seit unserer Gründung hat sich unser Unternehmen der Bereitstellung von Edelstahlprodukten höchster Qualität für Wohn- und Gewerbeimmobilien verschrieben.",
+      des1: "Seit unserer Gründung hat sich Kus Edelstahl der Bereitstellung von Edelstahlprodukten höchster Qualität für Wohn- und Gewerbeimmobilien verschrieben.",
       des2: "Unsere Reise begann mit der Leidenschaft für Metallverarbeitung und der Vision, funktionale und zugleich schöne Konstruktionselemente zu schaffen, die den Anforderungen der Zeit standhalten. Im Laufe der Jahre haben wir unsere Techniken verfeinert und unsere Fähigkeiten erweitert, ohne dabei unseren Anspruch an Exzellenz zu vernachlässigen.",
       des3: "Auch heute noch betreuen wir unsere Kunden mit der gleichen Hingabe an Qualität und Kundenzufriedenheit, die seit dem ersten Tag unser Markenzeichen ist."
     },
