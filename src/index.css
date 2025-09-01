@@ -2,6 +2,15 @@
 
 @import "tailwindcss";
 
+/* Shimmer animation for skeleton loading */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
 
 @media (prefers-color-scheme: light) {
   :root {

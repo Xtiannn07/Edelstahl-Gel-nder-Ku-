@@ -12,7 +12,7 @@ export default function GalleryPage() {
   const [images, setImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Start with false, will set to true only if needed
   const [menuOpenId, setMenuOpenId] = useState(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
@@ -20,6 +20,48 @@ export default function GalleryPage() {
   const translations = useSelector(selectTranslations);
   const { gallery } = translations;
   const { currentUser } = useAuth();
+
+  // Cache configuration
+  const CACHE_KEY = 'gallery_all_images';
+  const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
+
+  // Function to get cached data
+  const getCachedImages = () => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_DURATION) {
+          return data;
+        }
+      }
+    } catch (error) {
+      console.warn('Error reading cache:', error);
+    }
+    return null;
+  };
+
+  // Function to cache data
+  const setCachedImages = (data) => {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({
+        data,
+        timestamp: Date.now()
+      }));
+    } catch (error) {
+      console.warn('Error caching data:', error);
+    }
+  };
+
+  // Function to clear cache (useful when images are deleted/added)
+  const clearCache = () => {
+    try {
+      localStorage.removeItem(CACHE_KEY);
+      localStorage.removeItem('gallery_preview_images'); // Also clear preview cache
+    } catch (error) {
+      console.warn('Error clearing cache:', error);
+    }
+  };
 
   const categoryDefs = [
     { value: 'all', label: gallery.all },
@@ -42,13 +84,25 @@ export default function GalleryPage() {
   }, [toastMessage]);
 
   const fetchImages = async () => {
+    // Check cache first
+    const cachedImages = getCachedImages();
+    if (cachedImages) {
+      setImages(cachedImages);
+      return; // Use cached data, no loading needed
+    }
+
+    // Only show loading if we need to fetch from server
     setLoading(true);
+    
     const { data, error } = await supabase
       .from('gallery')
       .select('*')
       .order('created_at', { ascending: false });
 
-    if (!error && data) setImages(data);
+    if (!error && data) {
+      setImages(data);
+      setCachedImages(data); // Cache the data
+    }
     setLoading(false);
   };
 
@@ -77,6 +131,7 @@ export default function GalleryPage() {
     }
 
     setImages((prev) => prev.filter((img) => img.id !== id));
+    clearCache(); // Clear cache when image is deleted
     setMenuOpenId(null);
     setConfirmDeleteId(null);
     setToastMessage('Image deleted successfully.');
@@ -112,8 +167,17 @@ export default function GalleryPage() {
 
         <AnimatedSection>
           {loading ? (
-            <div className="flex justify-center items-center py-20">
-              <div className="w-12 h-12 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+              {Array.from({ length: 9 }).map((_, index) => (
+                <div key={index} className="animate-pulse">
+                  <div
+                    className="bg-gray-200 rounded-lg shadow overflow-hidden"
+                    style={{ aspectRatio: '4 / 3' }}
+                  >
+                    <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
+                  </div>
+                </div>
+              ))}
             </div>
           ) : (
             <>

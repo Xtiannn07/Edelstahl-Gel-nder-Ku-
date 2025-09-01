@@ -19,16 +19,17 @@ import NotFound from './pages/NotFound';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import ScrollToTop from './components/ScrollToTop';
 
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-
   return (
     <AuthProvider>
       <LanguageProvider>
+        <ScrollToTop />
         <div className="flex flex-col min-h-screen bg-white text-gray-900">
           <Navbar className="relative z-50" />
           <main className="flex-grow">

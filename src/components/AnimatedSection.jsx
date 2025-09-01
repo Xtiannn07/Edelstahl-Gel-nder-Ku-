@@ -20,23 +20,23 @@ export default function AnimatedSection({
   const animations = {
     fadeUp: {
       hidden: { opacity: 0, y: 50 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
     },
     fadeIn: {
       hidden: { opacity: 0 },
-      visible: { opacity: 1, transition: { duration: 1 } }
+      visible: { opacity: 1, transition: { duration: 0.5 } }
     },
     scaleUp: {
       hidden: { opacity: 0, scale: 0.8 },
-      visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } }
+      visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } }
     },
     slideRight: {
       hidden: { opacity: 0, x: -50 },
-      visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+      visible: { opacity: 1, x: 0, transition: { duration: 0.5 } }
     },
     slideLeft: {
       hidden: { opacity: 0, x: 50 },
-      visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+      visible: { opacity: 1, x: 0, transition: { duration: 0.5 } }
     }
   };
 

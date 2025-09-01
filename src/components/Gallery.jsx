@@ -12,22 +12,64 @@ const CATEGORIES = ['balconies', 'fences', 'gates', 'grilles','stairs'];
 
 export default function Gallery() {
   const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Start with false, will set to true only if needed
   const [selectedImage, setSelectedImage] = useState(null);
   const [columns, setColumns] = useState(3);
   const modalRef = useRef(null);
   const translations = useSelector(selectTranslations);
   const { gallery } = translations;
 
+  // Cache configuration
+  const CACHE_KEY = 'gallery_preview_images';
+  const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
+
+  // Function to get cached data
+  const getCachedImages = () => {
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const { data, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < CACHE_DURATION) {
+          return data;
+        }
+      }
+    } catch (error) {
+      console.warn('Error reading cache:', error);
+    }
+    return null;
+  };
+
+  // Function to cache data
+  const setCachedImages = (data) => {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({
+        data,
+        timestamp: Date.now()
+      }));
+    } catch (error) {
+      console.warn('Error caching data:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchImages = async () => {
+      // Check cache first
+      const cachedImages = getCachedImages();
+      if (cachedImages) {
+        setImages(cachedImages);
+        return; // Use cached data, no loading needed
+      }
+
+      // Only show loading if we need to fetch from server
       setLoading(true);
+      
       // Fetch a bunch, newest first
       const { data, error } = await supabase
         .from('gallery')
         .select('*')
         .order('created_at', { ascending: false })
         .limit(50);
+        
       if (!error && data) {
         // Group by category, pick top 2 per category
         const imagesByCat = {};
@@ -53,6 +95,7 @@ export default function Gallery() {
           }
         }
         setImages(deduped);
+        setCachedImages(deduped); // Cache the processed data
       }
       setLoading(false);
     };
@@ -97,10 +140,52 @@ export default function Gallery() {
 
   // Loading state
   if (loading) {
+    // Create skeleton masonry layout
+    const skeletonColumns = Array.from({ length: columns }, (_, colIndex) => {
+      // Distribute skeleton cards across columns
+      const itemsPerColumn = Math.ceil(10 / columns);
+      return Array.from({ length: itemsPerColumn }, (_, itemIndex) => ({
+        id: `skeleton-${colIndex}-${itemIndex}`,
+        height: Math.floor(Math.random() * 100 + 200) // Random heights for masonry effect
+      }));
+    });
+
     return (
-      <div className="flex justify-center items-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-      </div>
+      <AnimatedSection>
+        <section>
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="flex justify-between items-center mb-2 md:mb-8">
+              <h2 className="ml-2 text-xl md:text-3xl font-bold text-stone-100">
+                Loading Gallery...
+              </h2>
+              <div className="h-6 w-20 bg-gray-300 rounded animate-pulse"></div>
+            </div>
+
+            {/* Skeleton Masonry Grid */}
+            <div className="flex flex-wrap -mx-2">
+              {skeletonColumns.map((column, columnIndex) => (
+                <div
+                  key={`skeleton-column-${columnIndex}`}
+                  className={`px-2 w-full sm:w-1/2 ${columns === 3 ? 'md:w-1/3' : ''}`}
+                >
+                  <div className="flex flex-col space-y-4">
+                    {column.map((skeleton) => (
+                      <div key={skeleton.id} className="animate-pulse">
+                        <div
+                          className="bg-gray-200 rounded-lg shadow-md overflow-hidden"
+                          style={{ height: `${skeleton.height}px` }}
+                        >
+                          <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </AnimatedSection>
     );
   }
 

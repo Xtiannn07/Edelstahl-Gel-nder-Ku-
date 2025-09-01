@@ -50,7 +50,10 @@ export default function ContactForm() {
       return setStatus({ submitted: false, error: 'All fields required.' });
     }
     if (!session) {
-      await supabase.auth.signInWithOAuth({ provider: 'google' });
+      await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: `${window.location.origin}/contact` }
+      });
       return;
     }
     const user = session.user;
@@ -66,7 +69,10 @@ export default function ContactForm() {
   };
 
   const handleLogin = async () => {
-    await supabase.auth.signInWithOAuth({ provider: 'google' });
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${window.location.origin}/contact` }
+    });
   };
 
   const handleLogout = async () => {

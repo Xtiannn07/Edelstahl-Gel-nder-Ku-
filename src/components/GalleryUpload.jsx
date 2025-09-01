@@ -75,11 +75,17 @@ export default function GalleryUpload({ onSuccess }) {
         categories,
         user_id: user.id
       }
-    ]);
-
-    if (insertError) {
+    ]);    if (insertError) {
       setLoading(false);
       return setStatus('Database error: ' + insertError.message);
+    }
+
+    // Clear gallery cache when new image is uploaded
+    try {
+      localStorage.removeItem('gallery_all_images');
+      localStorage.removeItem('gallery_preview_images');
+    } catch (error) {
+      console.warn('Error clearing cache:', error);
     }
 
     setFile(null);
