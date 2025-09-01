@@ -16,6 +16,7 @@ export default function GalleryPage() {
   const [menuOpenId, setMenuOpenId] = useState(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
+  const [userProfile, setUserProfile] = useState(null);
 
   const translations = useSelector(selectTranslations);
   const { gallery } = translations;
@@ -77,11 +78,35 @@ export default function GalleryPage() {
   }, []);
 
   useEffect(() => {
+    if (currentUser) {
+      fetchUserProfile();
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
     if (toastMessage) {
       const timer = setTimeout(() => setToastMessage(''), 3000);
       return () => clearTimeout(timer);
     }
   }, [toastMessage]);
+
+  const fetchUserProfile = async () => {
+    if (!currentUser) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', currentUser.id)
+        .single();
+
+      if (!error && data) {
+        setUserProfile(data);
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+    }
+  };
 
   const fetchImages = async () => {
     // Check cache first
@@ -136,6 +161,9 @@ export default function GalleryPage() {
     setConfirmDeleteId(null);
     setToastMessage('Image deleted successfully.');
   };
+
+  // Check if user has delete permissions
+  const canDelete = currentUser && userProfile && userProfile.role === 'admin';
 
   const filtered = activeFilter === 'all'
     ? images
@@ -194,7 +222,7 @@ export default function GalleryPage() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         onClick={() => setSelectedImage(image)}
                       />
-                      {currentUser && (
+                      {canDelete && (
                         <div className="absolute top-2 right-2 z-10">
                           <button
                             className="p-1 rounded-lg shadow bg-white/30 hover:bg-gray-100 backdrop-blur-sm"
@@ -230,8 +258,14 @@ export default function GalleryPage() {
         </AnimatedSection>
 
         {confirmDeleteId && (
-          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-            <div className="bg-white p-6 rounded shadow-lg w-full max-w-sm">
+          <div 
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center"
+            onClick={() => setConfirmDeleteId(null)}
+          >
+            <div 
+              className="bg-white p-6 rounded shadow-lg w-full max-w-sm"
+              onClick={(e) => e.stopPropagation()}
+            >
               <p className="mb-4 text-gray-800">Are you sure you want to delete this image?</p>
               <div className="flex justify-end gap-2">
                 <button

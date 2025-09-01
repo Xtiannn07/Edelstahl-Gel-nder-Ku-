@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase/supabaseClient';
@@ -15,7 +15,6 @@ const AdminDashboard = () => {
   const [expandedId, setExpandedId] = useState(null);
   const [activeTab, setActiveTab] = useState('all');
   const messageRef = useRef(null);
-  const [unreadToUpdate, setUnreadToUpdate] = useState(new Set());
   const [showGalleryModal, setShowGalleryModal] = useState(false);
 
   const handleLogout = async () => {
@@ -27,29 +26,92 @@ const AdminDashboard = () => {
     }
   };
 
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     const { data, error } = await supabase
       .from('messages')
       .select('*')
       .order('id', { ascending: false });
     if (!error && data) setMessages(data);
-  };
+  }, []);
 
-  const queueMarkAsRead = (id) => {
+  const markAsRead = async (id) => {
+    // Optimistically update UI
     setMessages((prev) =>
       prev.map((msg) => (msg.id === id ? { ...msg, status: 'read' } : msg))
     );
-    setUnreadToUpdate((prev) => new Set(prev).add(id));
+
+    // Update in database immediately
+    const { error } = await supabase
+      .from('messages')
+      .update({ status: 'read' })
+      .eq('id', id);
+
+    if (error) {
+      console.error('Failed to update message:', error.message);
+      // Revert optimistic update on error
+      setMessages((prev) =>
+        prev.map((msg) => (msg.id === id ? { ...msg, status: 'unread' } : msg))
+      );
+    }
   };
 
-  const updateReadMessagesInDB = async () => {
-    if (unreadToUpdate.size === 0) return;
-    const ids = Array.from(unreadToUpdate);
-    const { error } = await supabase.from('messages').update({ status: 'read' }).in('id', ids);
-    if (error) {
-      console.error('Failed to update messages:', error.message);
+  const archiveMessage = async (id) => {
+    const { error } = await supabase
+      .from('messages')
+      .update({ status: 'archived' })
+      .eq('id', id);
+
+    if (!error) {
+      // Only remove from current view if not in archived tab
+      if (activeTab !== 'archived') {
+        setMessages((prev) => prev.filter((msg) => msg.id !== id));
+      } else {
+        // If in archived tab, move message to archived status
+        setMessages((prev) =>
+          prev.map((msg) => (msg.id === id ? { ...msg, status: 'archived' } : msg))
+        );
+      }
     } else {
-      setUnreadToUpdate(new Set());
+      console.error('Failed to archive message:', error.message);
+    }
+  };
+
+  const restoreMessage = async (id) => {
+    const { error } = await supabase
+      .from('messages')
+      .update({ status: 'read' })
+      .eq('id', id);
+
+    if (!error) {
+      setMessages((prev) => prev.filter((msg) => msg.id !== id));
+    } else {
+      console.error('Failed to restore message:', error.message);
+    }
+  };
+
+  const deleteMessage = async (id) => {
+    const { error } = await supabase
+      .from('messages')
+      .delete()
+      .eq('id', id);
+
+    if (!error) {
+      setMessages((prev) => prev.filter((msg) => msg.id !== id));
+    } else {
+      console.error('Failed to delete message:', error.message);
+    }
+  };
+
+  const deleteAllArchived = async () => {
+    const { error } = await supabase
+      .from('messages')
+      .delete()
+      .eq('status', 'archived');
+
+    if (!error) {
+      fetchMessages(); // Refresh the list
+    } else {
+      console.error('Failed to delete archived messages:', error.message);
     }
   };
 
@@ -58,35 +120,40 @@ const AdminDashboard = () => {
       setExpandedId(null);
     } else {
       setExpandedId(id);
-      if (status !== 'read') queueMarkAsRead(id);
-    }
-  };
-
-  const handleClickOutside = (e) => {
-    if (messageRef.current && !messageRef.current.contains(e.target)) {
-      if (expandedId !== null) {
-        updateReadMessagesInDB();
-        setExpandedId(null);
+      // Only mark as read if it's unread AND we're not in archived tab
+      if (status === 'unread' && activeTab !== 'archived') {
+        markAsRead(id);
       }
     }
   };
 
-  useEffect(() => {
-    fetchMessages();
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+  const handleClickOutside = useCallback((e) => {
+    if (messageRef.current && !messageRef.current.contains(e.target)) {
+      if (expandedId !== null) {
+        setExpandedId(null);
+      }
+    }
   }, [expandedId]);
 
+  // Fetch messages only once on mount
   useEffect(() => {
-    if (unreadToUpdate.size > 0) {
-      updateReadMessagesInDB();
-    }
-  }, [activeTab]);
+    fetchMessages();
+  }, [fetchMessages]);
+
+  // Refetch messages when switching tabs to ensure fresh data
+  useEffect(() => {
+    fetchMessages();
+  }, [activeTab, fetchMessages]);
+
+  // Handle click outside
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [handleClickOutside]);
 
   const filteredMessages = messages.filter((msg) => {
-    if (activeTab === 'unread') return msg.status !== 'read';
-    if (activeTab === 'read') return msg.status === 'read';
-    return true;
+    if (activeTab === 'archived') return msg.status === 'archived';
+    return msg.status !== 'archived'; // Show all non-archived messages in 'all' tab
   });
 
   return (
@@ -122,12 +189,20 @@ const AdminDashboard = () => {
           </button>
         </div>
 
-        <MessageTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <MessageTabs 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab}
+          deleteAllArchived={deleteAllArchived}
+        />
         <div ref={messageRef} className="mb-12">
           <MessageList
             messages={filteredMessages}
             expandedId={expandedId}
             toggleMessage={toggleMessage}
+            archiveMessage={archiveMessage}
+            restoreMessage={restoreMessage}
+            deleteMessage={deleteMessage}
+            activeTab={activeTab}
           />
         </div>
       </div>
