@@ -1,9 +1,7 @@
-// App.jsx
 import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
-import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
 
 import Navbar from './components/Navbar';
@@ -28,7 +26,6 @@ function App() {
 
   return (
     <AuthProvider>
-      <LanguageProvider>
         <ScrollToTop />
         <div className="flex flex-col min-h-screen bg-white text-gray-900">
           <Navbar className="relative z-50" />
@@ -55,7 +52,6 @@ function App() {
           </main>
           <Footer className="relative z-99" />
         </div>
-      </LanguageProvider>
     </AuthProvider>
   );
 }
